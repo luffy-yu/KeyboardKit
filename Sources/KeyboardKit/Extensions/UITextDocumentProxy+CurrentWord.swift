@@ -75,13 +75,13 @@ public extension UITextDocumentProxy {
 //        deleteBackward(times: word.count)
 //        insertText(replacement)
         guard let word = currentWord else { return }
-        
+
         var offset = 0
         let length = replacement.count
         for idx in 0..<length {
-            let suffix = String(replacement.suffix(length - idx))
-            if word.hasSuffix(suffix) {
-                offset = suffix.count
+            let prefix = String(replacement.prefix(length - idx))
+            if word.hasSuffix(prefix) {
+                offset = prefix.count
                 break
             }
         }
