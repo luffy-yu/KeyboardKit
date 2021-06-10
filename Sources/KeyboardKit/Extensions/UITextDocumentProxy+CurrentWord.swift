@@ -69,10 +69,23 @@ public extension UITextDocumentProxy {
      Replace the current word with a replacement text.
      */
     func replaceCurrentWord(with replacement: String) {
+//        guard let word = currentWord else { return }
+//        let offset = currentWordPostCursorPart?.count ?? 0
+//        adjustTextPosition(byCharacterOffset: offset)
+//        deleteBackward(times: word.count)
+//        insertText(replacement)
         guard let word = currentWord else { return }
-        let offset = currentWordPostCursorPart?.count ?? 0
-        adjustTextPosition(byCharacterOffset: offset)
-        deleteBackward(times: word.count)
+        
+        var offset = 0
+        let length = replacement.count
+        for idx in 0..<length {
+            let suffix = String(replacement.suffix(length - idx))
+            if word.hasSuffix(suffix) {
+                offset = suffix.count
+                break
+            }
+        }
+        deleteBackward(times: offset)
         insertText(replacement)
     }
 }
